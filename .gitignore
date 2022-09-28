@@ -39,3 +39,7 @@ nb-configuration.xml
 *.iml
 *.ipr
 *.iws
+
+# 루트 폴더 내 bat, img 파일들
+/*.bat
+/*.img
