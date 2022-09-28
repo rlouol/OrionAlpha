@@ -41,5 +41,5 @@ nb-configuration.xml
 *.iws
 
 # 루트 폴더 내 bat, img 파일들
-/*.bat
-/*.img
+*.bat
+*.img
