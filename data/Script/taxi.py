@@ -28,7 +28,7 @@ curTown = self.userGetFieldID()
 'TODO : 선택지 순서와 요금표 체크 필요'
 towns = []
 if curTown == 100000000:
-	towns = [["Lith Harbor", 104000000, 80], ["Perion", 102000000, 100], ["Ellinia", 101000000, 100], ["Kerning City", 103000000, 120]]
+	towns = [["Lith Harbor", 104000000, 80], ["Perion", 102000000, 120], ["Ellinia", 101000000, 100], ["Kerning City", 103000000, 100]]
 elif curTown == 101000000:
 	towns = [["Lith Harbor", 104000000, 120], ["Henesys", 100000000, 100], ["Perion", 102000000, 100], ["Kerning City", 103000000, 120]]
 elif curTown == 102000000:
@@ -53,6 +53,12 @@ def goTown(mapName, mapNum, fee):
 	else:
 		self.say("There's a lot to see in this town. Come back back when you want to go elsewhere.")
 
+'요금 계산. 초보자일 때는 10%로'
+def getFareWithNoviceOption(fee):
+	if not self.userIsBeginner():
+		return fee * 10
+	return fee
+
 '소개문'
 self.sayNext("Hi, i'm the Regular Cab. You came to the right place if you want to go to another town fast and secure. Your satisfaction is guaranteed.")
 menu = "Choose your destination, the fare leties from place to place.\r\n#b"
@@ -63,16 +69,11 @@ if self.userIsBeginner():
 
 '선택지'
 for i in range(0, len(towns)):
-	menu += "#L" + str(i) + "#" + towns[i][0] + " (" + str(getFareWithNoviceOption(towns[sel[2]])) + " mesos)#l\r\n"
+	menu += "#L" + str(i) + "#" + towns[i][0] + " (" + str(getFareWithNoviceOption(towns[i][2])) + " mesos)#l\r\n"
 
 '하나 골랐음'
 sel = int(self.askMenu(menu))
 
 '선택지로 텔레포트'
 if sel in range(0, len(towns)):
-	goTown(towns[sel][0], towns[sel][1], getFareWithNoviceOption(towns[sel[2]]))
-
-def getFareWithNoviceOption(fee):
-	if not self.userIsBeginner():
-		return fee * 10
-	return fee
+	goTown(towns[sel][0], towns[sel][1], getFareWithNoviceOption(towns[sel][2]))
