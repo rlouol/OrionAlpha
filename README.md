@@ -6,15 +6,15 @@ OrionAlpha - A Nexon Replica Emulator Project
  * You can download the game and client [here](https://mega.nz/#!O9Vy3C7Q!0FsLIilRwzImzjUY_9MxOqtvA4wuMn0SDWE65BkGHZk)
  * To emulate a korean locale in the client, you can download LocaleEmulator [here](https://mega.nz/#!T5t00IwA!YByix3DVt-_Pi0IpU-OwUnvhCDyZEPz4JQ6S-kbYHks)
  * You can download the named client IDB [here](https://mega.nz/#!KgdRna6Q!T5Op7_b_JF62QEvHqeYFp2NJcEYeoigqFdOHpREf5pI)
-## Requirements/Dependencies
- * Java JDK (11 or higher)
- * javax.json (or Java EE)
- * Netty (4.1.31 or higher)
- * HikariCP (3.1.0 or higher)
- * MariaDB Connector/J (2.2.3 or higher)
- * slf4j (1.7.4 or higher)
- * Jython (2.7.1 or higher)
- * favr.lib.BCrypt (0.9.0 or higher)
+## My Dependencies
+ * Java JDK 11
+ * javax.json 1.1
+ * Netty 4.1.42.Final
+ * HikariCP 3.1.0
+ * MariaDB Connector/J 2.2.3
+ * slf4j 1.7.4
+ * Jython 2.7.2
+ * favr.lib.BCrypt 0.9.0
  ----------------------------------------------------------------------
  ## Architecture
  The OrionAlpha Emulator is split up into two parts: *Login*, and *Game*, each executing on their own thread. 
