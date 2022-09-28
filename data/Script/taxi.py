@@ -16,22 +16,27 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
+'''
+Author: rlouol
+NPC: Regular Cab (메이플운수 중형택시)
+Script: 빅토리아 아일랜드 중형택시
+'''
 
+'현재 마을 위치'
 curTown = self.userGetFieldID()
-cJob = self.userGetJob()
+
+'TODO : 선택지 순서와 요금표 체크 필요'
 towns = []
-
-if curTown == 100000000 :
+if curTown == 100000000:
 	towns = [["Lith Harbor", 104000000, 80], ["Perion", 102000000, 100], ["Ellinia", 101000000, 100], ["Kerning City", 103000000, 120]]
-elif curTown == 101000000 :
+elif curTown == 101000000:
 	towns = [["Lith Harbor", 104000000, 120], ["Henesys", 100000000, 100], ["Perion", 102000000, 100], ["Kerning City", 103000000, 120]]
-elif curTown == 102000000 :
+elif curTown == 102000000:
 	towns = [["Lith Harbor", 104000000, 120], ["Henesys", 100000000, 100], ["Ellinia", 101000000, 100], ["Kerning City", 103000000, 80]]
-elif curTown == 103000000 :
+elif curTown == 103000000:
 	towns = [["Lith Harbor", 104000000, 120], ["Henesys", 100000000, 100], ["Ellinia", 101000000, 120], ["Perion", 102000000, 80]]
-else :  # Lith Harbor
+else:  # Lith Harbor
 	towns = [["Perion", 102000000, 120], ["Ellinia", 101000000, 120], ["Henesys", 100000000, 80], ["Kerning City", 103000000, 100]]
-
 
 'This is an example of how to define and use a function with parameters.'
 'NOTE: You must ALWAYS DECLARE THE FUNCTION FIRST. That is, define the function above, and call it from below.'
@@ -48,17 +53,26 @@ def goTown(mapName, mapNum, fee):
 	else:
 		self.say("There's a lot to see in this town. Come back back when you want to go elsewhere.")
 
-'This continues the global scope and is where the NPC starts execution at.'
+'소개문'
 self.sayNext("Hi, i'm the Regular Cab. You came to the right place if you want to go to another town fast and secure. Your satisfaction is guaranteed.")
 menu = "Choose your destination, the fare leties from place to place.\r\n#b"
-'We forloop from i=0, to i=towns.length. In each loop, we append the town selections to menu.'
-for i in range(0, len(towns)):
-	fare = (towns[i][2] * 10) if cJob != 0 else towns[i][2]
-	menu += "#L" + str(i) + "#" + towns[i][0] + " (" + str(fare) + " mesos)#l\r\n"
-'Just like we do above in goTown, we assign the response of the menu selection to sel.'
-sel = int(self.askMenu(menu))
-'Now we make sure the selection response is valid, and proceed to call goTown to move the user.'
 
-if sel in range(0, len(towns)) :
-	fare = towns[sel][2] * 10 if cJob != 0 else towns[sel][2]
-	goTown(towns[sel][0], towns[sel][1], fare)
+'초보자용 멘트'
+if self.userIsBeginner():
+	menu += "Oh you aren't a beginner, huh? Then I'm afraid I may have to charge you full price. Where would you like to go?\r\n#b"
+
+'선택지'
+for i in range(0, len(towns)):
+	menu += "#L" + str(i) + "#" + towns[i][0] + " (" + str(getFareWithNoviceOption(towns[sel[2]])) + " mesos)#l\r\n"
+
+'하나 골랐음'
+sel = int(self.askMenu(menu))
+
+'선택지로 텔레포트'
+if sel in range(0, len(towns)):
+	goTown(towns[sel][0], towns[sel][1], getFareWithNoviceOption(towns[sel[2]]))
+
+def getFareWithNoviceOption(fee):
+	if not self.userIsBeginner():
+		return fee * 10
+	return fee
